@@ -3,17 +3,32 @@ import { motion } from 'framer-motion';
 import * as FiIcons from 'react-icons/fi';
 import SafeIcon from '../common/SafeIcon';
 
-const { FiMenu, FiX, FiCommand } = FiIcons;
+const { FiMenu, FiX, FiCommand, FiSun, FiMoon } = FiIcons;
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -62,6 +77,13 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-4">
+          <button
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-cyan-neon hover:border-cyan-neon/30 transition-all cursor-pointer"
+          >
+            <SafeIcon icon={theme === 'dark' ? FiSun : FiMoon} className="text-lg" />
+          </button>
           <a href="#contact" className="btn-primary" aria-label="Start Project Inquiry">
             Start Project
           </a>
@@ -89,7 +111,17 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <a href="#contact" className="btn-primary w-full text-center mt-4">
+          <div className="flex items-center justify-between mt-2 pt-4 border-t border-white/10">
+            <span className="text-gray-400 text-sm font-medium">Theme Mode</span>
+            <button
+              onClick={toggleTheme}
+              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-cyan-neon hover:border-cyan-neon/30 transition-all cursor-pointer"
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              <SafeIcon icon={theme === 'dark' ? FiSun : FiMoon} className="text-lg" />
+            </button>
+          </div>
+          <a href="#contact" className="btn-primary w-full text-center mt-2" onClick={() => setMobileMenuOpen(false)}>
             Start Project
           </a>
         </div>
