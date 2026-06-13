@@ -67,7 +67,7 @@ const Footer = () => {
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
           <p>&copy; {new Date().getFullYear()} Innovation Hacks Web Solutions. All rights reserved.</p>
           <p className="mt-2 md:mt-0 flex items-center">
-            Designed with <span className="text-red-500 mx-1">♥</span> by Innovation Hacks
+            Designed by Innovation Hacks
           </p>
         </div>
       </div>

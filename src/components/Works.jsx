@@ -45,7 +45,6 @@ const Works = () => {
             <h2 className="text-3xl md:text-5xl font-bold mb-4">Featured <span className="text-gradient">Projects</span></h2>
             <p className="text-gray-400 max-w-xl text-lg">A selection of premium digital experiences we've crafted for forward-thinking brands.</p>
           </div>
-          <button className="btn-secondary whitespace-nowrap">View All Projects</button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

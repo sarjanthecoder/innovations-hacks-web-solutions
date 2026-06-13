@@ -52,10 +52,6 @@ const Services = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-white group-hover:text-cyan-neon transition-colors duration-300">{service.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-6">{service.desc}</p>
-                
-                <div className="flex items-center text-sm font-medium text-cyan-neon opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Learn More <SafeIcon icon={FiIcons.FiArrowRight} className="ml-2" />
-                </div>
               </div>
             </motion.div>
           ))}
