@@ -89,13 +89,22 @@ const Navbar = () => {
           </a>
         </div>
 
-        <button
-          className="md:hidden text-gray-300 hover:text-white"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle Navigation Menu"
-        >
-          <SafeIcon icon={mobileMenuOpen ? FiX : FiMenu} className="text-2xl" />
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <button
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-cyan-neon hover:border-cyan-neon/30 transition-all cursor-pointer"
+          >
+            <SafeIcon icon={theme === 'dark' ? FiSun : FiMoon} className="text-lg" />
+          </button>
+          <button
+            className="text-gray-300 hover:text-white"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle Navigation Menu"
+          >
+            <SafeIcon icon={mobileMenuOpen ? FiX : FiMenu} className="text-2xl" />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -111,16 +120,7 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <div className="flex items-center justify-between mt-2 pt-4 border-t border-white/10">
-            <span className="text-gray-400 text-sm font-medium">Theme Mode</span>
-            <button
-              onClick={toggleTheme}
-              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-cyan-neon hover:border-cyan-neon/30 transition-all cursor-pointer"
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              <SafeIcon icon={theme === 'dark' ? FiSun : FiMoon} className="text-lg" />
-            </button>
-          </div>
+
           <a href="#contact" className="btn-primary w-full text-center mt-2" onClick={() => setMobileMenuOpen(false)}>
             Start Project
           </a>
