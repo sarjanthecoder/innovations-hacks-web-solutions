@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import * as FiIcons from 'react-icons/fi';
 import SafeIcon from '../common/SafeIcon';
 
-const { FiMail, FiGlobe, FiInstagram, FiLinkedin, FiSend, FiUsers, FiPhone, FiMapPin, FiGithub, FiChevronDown } = FiIcons;
+const { FiMail, FiGlobe, FiInstagram, FiLinkedin, FiSend, FiUsers, FiPhone, FiMapPin, FiGithub, FiChevronDown, FiArrowUp } = FiIcons;
 
 const teamMembers = [
   { 
@@ -68,6 +68,31 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', company: '', service: '', message: '' });
   const [status, setStatus] = useState({ type: '', message: '' });
   const [loading, setLoading] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const contactRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowScrollTop(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (contactRef.current) {
+      observer.observe(contactRef.current);
+    }
+
+    return () => {
+      if (contactRef.current) {
+        observer.unobserve(contactRef.current);
+      }
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -109,7 +134,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
+    <section id="contact" ref={contactRef} className="py-24 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-full md:w-1/2 h-full bg-gradient-to-l from-blue-electric/10 to-transparent pointer-events-none"></div>
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10">
@@ -338,6 +363,21 @@ const Contact = () => {
           </motion.div>
         </div>
       </div>
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 30, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 30, scale: 0.8 }}
+            onClick={scrollToTop}
+            title="Scroll to Top"
+            aria-label="Scroll to top of the page"
+            className="fixed bottom-8 right-8 z-50 p-4 rounded-xl bg-gradient-to-br from-cyan-neon to-blue-electric text-navy-950 font-bold shadow-lg shadow-cyan-neon/30 hover:scale-110 active:scale-95 transition-transform cursor-pointer"
+          >
+            <SafeIcon icon={FiArrowUp} className="text-xl" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
